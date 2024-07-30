@@ -20,6 +20,7 @@ public class SheetBall extends JPanel {
 
         for (Ball b: balls) {
             g2d.fill(b.getShape());
+            revalidate();
         }
     }
 }
