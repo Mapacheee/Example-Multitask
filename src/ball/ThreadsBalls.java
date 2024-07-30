@@ -15,7 +15,6 @@ public class ThreadsBalls implements Runnable {
     public void run() {
         for (int i = 0; i < 3000; i++) {
             ball.moveBall(component.getBounds());
-            component.repaint();
 
             try {
                 Thread.sleep(8);
