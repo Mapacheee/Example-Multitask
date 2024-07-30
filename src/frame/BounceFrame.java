@@ -1,6 +1,7 @@
 package frame;
 
 import ball.Ball;
+import ball.ThreadsBalls;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +24,11 @@ public class BounceFrame extends JFrame {
 
         setButton(buttonsSheet, "¡Añadir pelota!", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                startGame();
+                try {
+                    startGame();
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -42,13 +47,12 @@ public class BounceFrame extends JFrame {
         button.addActionListener(listener);
     }
 
-    private void startGame() {
+    private void startGame() throws InterruptedException {
         Ball ball = new Ball();
         sheet.add(ball);
 
-        for (int i = 0; i < 30000; i++) {
-            ball.moveBall(sheet.getBounds());
-            sheet.paint(sheet.getGraphics());
-        }
+        Runnable r = new ThreadsBalls(ball, sheet);
+        Thread t = new Thread(r);
+        t.start();
     }
 }
